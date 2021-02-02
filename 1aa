@@ -1,0 +1,28 @@
+select
+FORMAT(DATA,'dd/MM/yyyy') AS DATA,
+concorrente,
+ID_produto,
+DPTO,
+LINHA,
+macroregiao,
+Regiao,
+Frete,
+parcelas,
+valor_parcela/100 as valor_parcela
+from teste_ma.dbo.base_a
+where LINHA = 'SMARTPHONE'
+UNION ALL
+select 
+FORMAT(DATA,'dd/MM/yyyy') AS DATA,
+concorrente,
+ID_produto,
+DPTO,
+LINHA,
+macroregiao,
+Regiao,
+Frete/100 as Frete,
+parcelas,
+valor_parcela
+from teste_ma.dbo.base_b
+where LINHA = 'SMARTPHONE'
+
