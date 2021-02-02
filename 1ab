@@ -1,0 +1,19 @@
+
+-- Após analisar os dados da consulta anterior para a Linha Smartphone, fiz diversos agrupamentos e verifiquei que no dia 23/07/2020 temos vendas de smartphones em 2 regiões: interior e capital, enquanto no dia 24/07/2020 temos apenas vendas no interior.
+
+select * from
+(select
+FORMAT(DATA,'dd/MM/yyyy') AS DATA,
+Regiao
+from teste_ma.dbo.base_a
+where LINHA = 'SMARTPHONE'
+UNION ALL
+select 
+FORMAT(DATA,'dd/MM/yyyy') AS DATA,
+Regiao
+from teste_ma.dbo.base_b
+where LINHA = 'SMARTPHONE'
+) base
+group by
+DATA,
+Regiao
