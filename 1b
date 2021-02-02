@@ -1,0 +1,31 @@
+select * from (
+    SELECT FORMAT(DATA,'dd/MM/yyyy') AS DATA,
+           concorrente,
+           macroregiao,
+           Regiao,
+   sum(Frete) as Frete,
+   sum((valor_parcela/100)*parcelas) as valor_produto,
+   sum(Frete)+sum((valor_parcela/100)*parcelas) AS valor_produto_e_frete
+    FROM teste_ma.dbo.base_a
+    WHERE LINHA = 'SMARTPHONE'
+    GROUP BY FORMAT(DATA,'dd/MM/yyyy'),
+             concorrente,
+             macroregiao,
+             Regiao
+    UNION ALL
+    SELECT FORMAT(DATA,'dd/MM/yyyy') AS DATA,
+           concorrente,
+           macroregiao,
+           Regiao,
+   sum(Frete/100) as Frete,
+   sum(parcelas*valor_parcela) as valor_produto,
+   sum(Frete/100)+sum(parcelas*valor_parcela) as valor_produto_e_frete
+    FROM teste_ma.dbo.base_b
+    WHERE LINHA = 'SMARTPHONE'
+    GROUP BY FORMAT(DATA,'dd/MM/yyyy'),
+             concorrente,
+             macroregiao,
+             Regiao
+) base
+where
+    CAST(base.DATA as datetime) = '23-07-2020'
